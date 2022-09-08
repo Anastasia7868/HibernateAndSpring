@@ -1,6 +1,9 @@
 package ru.aston.appolinarova.hibernate.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +21,7 @@ public class Position {
     private String department;
 
     @OneToMany(mappedBy = "position")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Employee> employees;
 
     public Position() {
@@ -58,5 +62,13 @@ public class Position {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public void addEmployee(Employee employee){
+        if (this.employees == null){
+            this.employees = new ArrayList<>();
+        }
+        this.employees.add(employee);
+        employee.setPosition(this);
     }
 }

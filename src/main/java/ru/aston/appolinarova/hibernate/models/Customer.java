@@ -1,6 +1,9 @@
 package ru.aston.appolinarova.hibernate.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +24,7 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Project> projects;
 
     public Customer() {
@@ -70,5 +74,13 @@ public class Customer {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public void addProject(Project project) {
+        if (this.projects == null){
+            this.projects = new ArrayList<>();
+        }
+        this.projects.add(project);
+        project.setCustomer(this);
     }
 }
