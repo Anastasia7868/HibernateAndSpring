@@ -31,6 +31,12 @@ public class Position {
         this.employeeList = employeeList;
     }
 
+    public Position(String positionName, String department) {
+        this.id = id;
+        this.positionName = positionName;
+        this.department = department;
+    }
+
     public int getId() {
         return id;
     }
