@@ -9,6 +9,8 @@ import ru.aston.appolinarova.hibernate.models.Customer;
 import ru.aston.appolinarova.hibernate.models.Position;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -37,6 +39,7 @@ public class PositionDaoImpl {
     @Transactional
     public void save(Position position) {
         Session session = sessionFactory.getCurrentSession();
+        position.setEmployeeList(new ArrayList<>(Collections.emptyList()));
         session.save(position);
     }
 

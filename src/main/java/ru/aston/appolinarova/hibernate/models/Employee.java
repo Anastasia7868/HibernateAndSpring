@@ -27,10 +27,12 @@ public class Employee {
     inverseJoinColumns = @JoinColumn(name = "project_id"))
     private List<Project> projectList;
 
+
     public Employee() {
     }
 
     public Employee(String lastName, int age, Position owner) {
+        this.id = id;
         this.lastName = lastName;
         this.age = age;
         this.owner = owner;
