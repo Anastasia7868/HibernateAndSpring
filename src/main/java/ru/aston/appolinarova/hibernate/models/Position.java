@@ -1,10 +1,9 @@
 package ru.aston.appolinarova.hibernate.models;
 
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Table(name = "position")
@@ -20,16 +19,16 @@ public class Position {
     @Column(name = "department")
     private String department;
 
-    @OneToMany(mappedBy = "position")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private List<Employee> employees;
+    @OneToMany(mappedBy = "owner")
+    private List<Employee> employeeList;
 
     public Position() {
     }
 
-    public Position(String positionName, String department) {
+    public Position(String positionName, String department, List<Employee> employeeList) {
         this.positionName = positionName;
         this.department = department;
+        this.employeeList = employeeList;
     }
 
     public int getId() {
@@ -56,19 +55,13 @@ public class Position {
         this.department = department;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public List<Employee> getEmployeeList() {
+        return employeeList;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
-    public void addEmployee(Employee employee){
-        if (this.employees == null){
-            this.employees = new ArrayList<>();
-        }
-        this.employees.add(employee);
-        employee.setPosition(this);
-    }
+
 }

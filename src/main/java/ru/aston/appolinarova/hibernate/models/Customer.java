@@ -1,10 +1,10 @@
 package ru.aston.appolinarova.hibernate.models;
 
-import org.hibernate.annotations.Cascade;
+
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Table(name = "customer")
@@ -20,20 +20,16 @@ public class Customer {
     @Column(name = "account")
     private String account;
 
-    @Column(name = "email")
-    private String email;
-
-    @OneToMany(mappedBy = "customer")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private List<Project> projects;
+    @OneToMany(mappedBy = "owner")
+    private List<Project> projectList;
 
     public Customer() {
     }
 
-    public Customer(String customerName, String account, String email) {
+    public Customer(String customerName, String account, List<Project> projectList) {
         this.customerName = customerName;
         this.account = account;
-        this.email = email;
+        this.projectList = projectList;
     }
 
     public int getId() {
@@ -60,27 +56,11 @@ public class Customer {
         this.account = account;
     }
 
-    public String getEmail() {
-        return email;
+    public List<Project> getProjectList() {
+        return projectList;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
-
-    public void addProject(Project project) {
-        if (this.projects == null){
-            this.projects = new ArrayList<>();
-        }
-        this.projects.add(project);
-        project.setCustomer(this);
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 }

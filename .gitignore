@@ -27,5 +27,6 @@ hs_err_pid*
 *.iml
 *.ipr
 *.properties
+.DS_Store
 # Maven
 /**/target/*

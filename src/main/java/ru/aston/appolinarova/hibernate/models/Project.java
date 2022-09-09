@@ -3,13 +3,14 @@ package ru.aston.appolinarova.hibernate.models;
 import javax.persistence.*;
 import java.util.List;
 
+
 @Entity
 @Table(name = "project")
 public class Project {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "project_name")
@@ -20,25 +21,26 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+    private Customer owner;
 
-    @ManyToMany
-    @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    private List<Employee> employees;
+    @ManyToMany(mappedBy = "projectList")
+    private List<Employee> employeeList;
 
     public Project() {
     }
 
-    public Project(String projectName, int cost, Customer customer) {
+    public Project(String projectName, int cost, Customer owner) {
         this.projectName = projectName;
         this.cost = cost;
-        this.customer = customer;
+        this.owner = owner;
     }
 
-    public Project(String projectName, int cost) {
-        this.projectName = projectName;
-        this.cost = cost;
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     public int getId() {
@@ -65,20 +67,12 @@ public class Project {
         this.cost = cost;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Customer getOwner() {
+        return owner;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    public void setOwner(Customer owner) {
+        this.owner = owner;
     }
 
     @Override

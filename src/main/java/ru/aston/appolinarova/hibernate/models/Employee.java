@@ -20,23 +20,20 @@ public class Employee {
 
     @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "id")
-    private Position position;
+    private Position owner;
 
-    @ManyToMany(mappedBy = "employees")
-    private List<Project> projects;
+    @ManyToMany
+    @JoinTable(name = "employee_project", joinColumns = @JoinColumn(name = "employee_id"),
+    inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<Project> projectList;
 
     public Employee() {
     }
 
-    public Employee(String lastName, int age, Position position) {
+    public Employee(String lastName, int age, Position owner) {
         this.lastName = lastName;
         this.age = age;
-        this.position = position;
-    }
-
-    public Employee(String lastName, int age) {
-        this.lastName = lastName;
-        this.age = age;
+        this.owner = owner;
     }
 
     public int getId() {
@@ -63,20 +60,20 @@ public class Employee {
         this.age = age;
     }
 
-    public Position getPosition() {
-        return position;
+    public Position getOwner() {
+        return owner;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setOwner(Position owner) {
+        this.owner = owner;
     }
 
-    public List<Project> getProjects() {
-        return projects;
+    public List<Project> getProjectList() {
+        return projectList;
     }
 
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 
     @Override
