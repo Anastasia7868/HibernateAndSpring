@@ -5,11 +5,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.aston.appolinarova.hibernate.dto.EmployeeDto;
 import ru.aston.appolinarova.hibernate.dto.ProjectDto;
 import ru.aston.appolinarova.hibernate.models.Customer;
-import ru.aston.appolinarova.hibernate.models.Employee;
-import ru.aston.appolinarova.hibernate.models.Position;
 import ru.aston.appolinarova.hibernate.models.Project;
 
 import java.util.List;

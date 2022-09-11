@@ -12,12 +12,11 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -27,6 +26,7 @@ import java.util.Properties;
 @PropertySource("classpath:hibernate.properties")
 @EnableTransactionManagement
 @EnableWebMvc
+@EnableSwagger2
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
@@ -94,6 +94,12 @@ public class SpringConfig implements WebMvcConfigurer {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessioionFactory().getObject());
         return transactionManager;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
 }
