@@ -1,6 +1,9 @@
 package ru.aston.appolinarova.hibernate.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -20,6 +23,10 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+
+    @ManyToMany(mappedBy = "projectList")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private List<Employee> employeeList;
 
     public Project() {
     }
@@ -60,5 +67,33 @@ public class Project {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (id != project.id) return false;
+        if (cost != project.cost) return false;
+        return projectName != null ? projectName.equals(project.projectName) : project.projectName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (projectName != null ? projectName.hashCode() : 0);
+        result = 31 * result + cost;
+        return result;
     }
 }

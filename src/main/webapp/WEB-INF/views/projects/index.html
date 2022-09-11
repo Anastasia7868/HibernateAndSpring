@@ -8,7 +8,7 @@
 
 <div th:each="project : ${projects}">
     <a th:href="@{/projects/{id}(id=${project.getId()})}"
-       th:text="${project.getProjectName() + ', Project cost' + project.getCost()}">user</a>
+       th:text="${project.getProjectName() + ', Project cost ' + project.getCost()}">user</a>
 </div>
 
 <br/>

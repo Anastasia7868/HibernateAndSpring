@@ -59,4 +59,10 @@ public class EmployeeDao {
         session.remove(employee);
         employee.getPosition().getEmployeeList().remove(employee);
     }
+
+
+    public List<Employee> getAllEmployeeBySortedLastName() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select e from Employee e order by e.lastName desc ", Employee.class).getResultList();
+    }
 }

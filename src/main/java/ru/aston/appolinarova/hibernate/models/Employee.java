@@ -1,6 +1,9 @@
 package ru.aston.appolinarova.hibernate.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -21,10 +24,12 @@ public class Employee {
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
 
-    /* @ManyToMany
+
+    @ManyToMany
     @JoinTable(name = "employee_project", joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id"))
-    private List<Project> projectList;*/
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private List<Project> projectList;
 
 
     public Employee() {
@@ -69,13 +74,13 @@ public class Employee {
         this.position = position;
     }
 
-    /*public List<Project> getProjectList() {
+    public List<Project> getProjectList() {
         return projectList;
     }
 
     public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -96,4 +101,5 @@ public class Employee {
         result = 31 * result + age;
         return result;
     }
+
 }
