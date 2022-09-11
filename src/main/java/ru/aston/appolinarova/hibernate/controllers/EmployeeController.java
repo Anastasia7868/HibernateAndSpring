@@ -7,27 +7,28 @@ import org.springframework.web.bind.annotation.*;
 import ru.aston.appolinarova.hibernate.dao.EmployeeDao;
 import ru.aston.appolinarova.hibernate.dto.EmployeeDto;
 import ru.aston.appolinarova.hibernate.models.Employee;
+import ru.aston.appolinarova.hibernate.service.EmployeeService;
 
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeDao employeeDao;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeDao employeeDao) {
-        this.employeeDao = employeeDao;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("employees", employeeDao.index());
+        model.addAttribute("employees", employeeService.showAllEmployee());
         return "employees/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("employee", employeeDao.show(id));
+        model.addAttribute("employee", employeeService.getById(id));
         return "employees/show";
     }
 
@@ -38,32 +39,26 @@ public class EmployeeController {
 
     @PostMapping
     public String create(@ModelAttribute("employee") EmployeeDto employeeDto) {
-        employeeDao.save(employeeDto);
+        employeeService.create(employeeDto);
         return "redirect:/employees";
     }
+
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("employee", employeeDao.show(id));
+        model.addAttribute("employee", employeeService.getById(id));
         return "employees/edit";
     }
-//------
-    /*@PatchMapping("/{id}")
-    public String update(@ModelAttribute("employee") Employee employee, @PathVariable("id") int id) {
-        employeeDao.update(id, employee);
-        return "redirect:/employees";
-    }*/
-
-
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("employee") Employee employee, @PathVariable("id") int id) {
-        employeeDao.update(id, employee);
+        employeeService.update(id, employee);
         return "redirect:/employees";
     }
+
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        employeeDao.delete(id);
+        employeeService.delete(id);
         return "redirect:/employees";
     }
 

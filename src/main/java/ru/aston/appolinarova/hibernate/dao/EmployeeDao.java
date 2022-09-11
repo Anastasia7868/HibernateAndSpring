@@ -22,20 +22,19 @@ public class EmployeeDao {
         this.sessionFactory = sessionFactory;
     }
     @Transactional(readOnly = true)
-    public List<Employee> index() {
+    public List<Employee> showAllEmployee() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
     }
 
     @Transactional(readOnly = true)
-    public Employee show(int id) {
-        //получаем человека по id
+    public Employee getById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Employee.class, id);
     }
 
     @Transactional
-    public void save(EmployeeDto employeeDto) {
+    public void create(EmployeeDto employeeDto) {
         Session session = sessionFactory.getCurrentSession();
         Position position = session.get(Position.class, employeeDto.getPositionId());
         Employee employee = new Employee(employeeDto.getLastName(), employeeDto.getAge(), position);
@@ -47,24 +46,15 @@ public class EmployeeDao {
     @Transactional
     public void update(int id, Employee employee) {
         Session session = sessionFactory.getCurrentSession();
-        //Position position = session.get(Position.class, employeeDto.getPositionId());
         Employee employeeToBeUpdated = session.get(Employee.class, id);
         employeeToBeUpdated.setLastName(employee.getLastName());
         employeeToBeUpdated.setAge(employee.getAge());
-       // employeeToBeUpdated.setPosition(position);
+
     }
+
     @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(session.get(Employee.class, id));
-
-    }
-
-    private EmployeeDto createDto(Employee employee){
-        EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setLastName(employee.getLastName());
-        employeeDto.setAge(employeeDto.getAge());
-        employeeDto.setPositionId(employee.getPosition().getId());
-        return employeeDto;
     }
 }
