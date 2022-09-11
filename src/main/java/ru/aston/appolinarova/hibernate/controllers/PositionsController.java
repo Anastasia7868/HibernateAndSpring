@@ -50,7 +50,7 @@ public class PositionsController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Position position, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("position") Position position, @PathVariable("id") int id) {
         positionService.update(id, position);
         return "redirect:/positions";
     }

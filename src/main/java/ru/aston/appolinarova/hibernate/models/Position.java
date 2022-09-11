@@ -1,5 +1,7 @@
 package ru.aston.appolinarova.hibernate.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class Position {
     private String department;
 
     @OneToMany(mappedBy = "position")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Employee> employeeList;
 
     public Position() {

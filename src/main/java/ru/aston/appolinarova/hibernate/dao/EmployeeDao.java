@@ -55,6 +55,8 @@ public class EmployeeDao {
     @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.remove(session.get(Employee.class, id));
+        Employee employee = session.get(Employee.class, id);
+        session.remove(employee);
+        employee.getPosition().getEmployeeList().remove(employee);
     }
 }

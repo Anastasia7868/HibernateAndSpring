@@ -38,8 +38,7 @@ public class PositionDao {
     @Transactional
     public void save(Position position) {
         Session session = sessionFactory.getCurrentSession();
-        position.setEmployeeList(new ArrayList<>(Collections.emptyList()));
-        session.save(position);
+        session.persist(position);
     }
 
     @Transactional
@@ -54,7 +53,8 @@ public class PositionDao {
     @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.remove(session.get(Position.class, id));
-
+        Position position = session.get(Position.class, id);
+        session.remove(position);
+        position.getEmployeeList().forEach(i -> i.setPosition(null));
     }
 }
