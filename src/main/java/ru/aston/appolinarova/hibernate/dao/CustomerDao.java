@@ -33,7 +33,7 @@ public class CustomerDao {
     @Transactional
     public void create(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(customer);
+        session.save(customer);
     }
 
     @Transactional

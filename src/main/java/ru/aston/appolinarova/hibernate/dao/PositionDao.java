@@ -38,7 +38,7 @@ public class PositionDao {
     @Transactional
     public void save(Position position) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(position);
+        session.save(position);
     }
 
     @Transactional
