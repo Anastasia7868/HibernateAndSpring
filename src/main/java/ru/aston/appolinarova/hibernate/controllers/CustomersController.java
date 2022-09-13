@@ -18,7 +18,7 @@ public class CustomersController {
         this.customerService = customerService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String index(Model model) {
         model.addAttribute("customers", customerService.findAllCustomers());
         return "customers/index";
